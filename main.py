@@ -251,13 +251,13 @@ class CommandParser:
             color = self.parse_color(parts[4])
             return Circle(x, y, r, color)
 
-        elif shape_type == "RECTANGLE":
+        if shape_type == "RECTANGLE":
             tl_x, tl_y = float(parts[1]), float(parts[2])
             br_x, br_y = float(parts[3]), float(parts[4])
             color = self.parse_color(parts[5])
             return Rectangle(tl_x, tl_y, br_x, br_y, color)
 
-        elif shape_type == "TRIANGLE":
+        if shape_type == "TRIANGLE":
             x1, y1 = float(parts[1]), float(parts[2])
             x2, y2 = float(parts[3]), float(parts[4])
             x3, y3 = float(parts[5]), float(parts[6])
