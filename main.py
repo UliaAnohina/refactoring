@@ -215,7 +215,7 @@ class CommandParser:
             condition = parts[1] if len(parts) > 1 else ""
             initial_count = len(self.shapes)
             self.shapes = [shape for shape in self.shapes
-                          if not self.matches_condition(shape, condition)]
+                           if not self.matches_condition(shape, condition)]
             removed = initial_count - len(self.shapes)
             print(f"Удалено фигур: {removed}")
 
