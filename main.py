@@ -301,7 +301,10 @@ if __name__ == "__main__":
             test_files = ['test_basic.txt', 'test_advanced.txt', 'test_edge_cases.txt']
 
             for test_file in test_files:
-                print(f"\n!!!!!!!!!!!!!!!! Выполнение тестового файла: {test_file}")
+                print(
+                    f"\n!!!!!!!!!!!!!!!! Выполнение тестового файла: "
+                    f"{test_file}"
+                )
                 print("-" * 40)
 
                 test_path = os.path.join('tests', test_file)
