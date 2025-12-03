@@ -169,21 +169,31 @@ class CommandParser:
             area = round(shape.get_area(), 2)
             value = round(value, 2)
 
-            if op == ">": return area > value
-            if op == "<": return area < value
-            if op == ">=": return area >= value
-            if op == "<=": return area <= value
-            if op == "==": return abs(area - value) < 0.001
+            if op == ">":
+                return area > value
+            if op == "<":
+                return area < value
+            if op == ">=":
+                return area >= value
+            if op == "<=":
+                return area <= value
+            if op == "==":
+                return abs(area - value) < 0.001
         
         elif field == "perimeter":
             perimeter = round(shape.get_perimeter(), 2)
             value = round(value, 2)
 
-            if op == ">": return perimeter > value
-            if op == "<": return perimeter < value
-            if op == ">=": return perimeter >= value
-            if op == "<=": return perimeter <= value
-            if op == "==": return abs(perimeter - value) < 0.001
+            if op == ">":
+                return perimeter > value
+            if op == "<":
+                return perimeter < value
+            if op == ">=":
+                return perimeter >= value
+            if op == "<=":
+                return perimeter <= value
+            if op == "==":
+                return abs(perimeter - value) < 0.001
         
         return False
     
