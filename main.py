@@ -35,7 +35,13 @@ class Shape:
 
 
 class Circle(Shape):
-    def __init__(self, center_x: int, center_y: int, radius: int, color: Color):
+    def __init__(
+        self,
+        center_x: int,
+        center_y: int,
+        radius: int,
+        color: Color
+    ):
         super().__init__(color)
         self.center_x = center_x
         self.center_y = center_y
@@ -48,10 +54,15 @@ class Circle(Shape):
         return 2 * math.pi * self.radius
 
     def __str__(self) -> str:
-        return (f"Круг: центр({self.center_x},{self.center_y}), "
-                f"радиус={self.radius}, цвет={self.color.value}, "
-                f"площадь={self.get_area():.2f}, периметр={self.get_perimeter():.2f}, "
-                f"дата редактирования: {self.last_edit_date.strftime('%Y-%m-%d %H:%M:%S')}")
+        return (
+            f"Круг: центр({self.center_x},{self.center_y}), "
+            f"радиус={self.radius}, "
+            f"цвет={self.color.value}, "
+            f"площадь={self.get_area():.2f}, "
+            f"периметр={self.get_perimeter():.2f}, "
+            f"дата редактирования: "
+            f"{self.last_edit_date.strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
 
 class Rectangle(Shape):
@@ -76,11 +87,16 @@ class Rectangle(Shape):
         return 2 * (self.get_width() + self.get_height())
 
     def __str__(self) -> str:
-        return (f"Прямоугольник: верхний левый({self.top_left_x},{self.top_left_y}), "
-                f"нижний правый({self.bottom_right_x},{self.bottom_right_y}), "
-                f"цвет={self.color.value}, площадь={self.get_area():.2f}, "
-                f"периметр={self.get_perimeter():.2f}, "
-                f"дата редактирования: {self.last_edit_date.strftime('%Y-%m-%d %H:%M:%S')}")
+        return (
+            f"Прямоугольник: "
+            f"верхний левый({self.top_left_x},{self.top_left_y}), "
+            f"нижний правый({self.bottom_right_x},{self.bottom_right_y}), "
+            f"цвет={self.color.value}, "
+            f"площадь={self.get_area():.2f}, "
+            f"периметр={self.get_perimeter():.2f}, "
+            f"дата редактирования: "
+            f"{self.last_edit_date.strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
 
 class Triangle(Shape):
@@ -103,11 +119,15 @@ class Triangle(Shape):
         return side1 + side2 + side3
 
     def __str__(self) -> str:
-        return (f"Треугольник: точки({self.x1},{self.y1}), "
-                f"({self.x2},{self.y2}), ({self.x3},{self.y3}), "
-                f"цвет={self.color.value}, площадь={self.get_area():.2f}, "
-                f"периметр={self.get_perimeter():.2f}, "
-                f"дата редактирования: {self.last_edit_date.strftime('%Y-%m-%d %H:%M:%S')}")
+        return (
+            f"Треугольник: точки({self.x1},{self.y1}), "
+            f"({self.x2},{self.y2}), ({self.x3},{self.y3}), "
+            f"цвет={self.color.value}, "
+            f"площадь={self.get_area():.2f}, "
+            f"периметр={self.get_perimeter():2f}, "
+            f"дата редактирования: "
+            f"{self.last_edit_date.strftime('%Y-%m-%d %H:%M:%S')}"
+        )
 
 
 class CommandParser:
@@ -298,7 +318,11 @@ if __name__ == "__main__":
             print("="*50)
 
             parser = CommandParser()
-            test_files = ['test_basic.txt', 'test_advanced.txt', 'test_edge_cases.txt']
+            test_files = [
+                'test_basic.txt',
+                'test_advanced.txt',
+                'test_edge_cases.txt',
+            ]
 
             for test_file in test_files:
                 print(
