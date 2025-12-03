@@ -1,3 +1,8 @@
+"""Модуль для работы с геометрическими фигурами.
+Содержит классы для создания и управления фигурами,
+а также парсер команд для добавления, удаления и вывода фигур.
+"""
+
 import math
 import datetime
 from enum import Enum
@@ -7,6 +12,7 @@ import os
 
 
 class Color(Enum):
+    """Перечисление цветов фигур."""
     RED = "красный"
     ORANGE = "оранжевый"
     YELLOW = "желтый"
@@ -17,24 +23,49 @@ class Color(Enum):
 
 
 class Shape:
+    """Базовый класс для геометрических фигур."""
     def __init__(self, color: Color):
+        """Инициализирует фигуру с заданным цветом.
+        Args:
+            color: Цвет фигуры из перечисления Color
+        """
         self.color = color
         self.last_edit_date = datetime.datetime.now()
 
     def get_area(self) -> float:
+        """Вычисляет площадь фигуры.
+        Returns:
+            Площадь фигуры в квадратных единицах
+        Raises:
+            NotImplementedError: Метод должен быть реализован в подклассе
+        """
         raise NotImplementedError("Метод должен быть реализован в подклассе")
 
     def get_perimeter(self) -> float:
+        """Вычисляет периметр фигуры.
+        Returns:
+            Периметр фигуры в линейных единицах
+        Raises:
+            NotImplementedError: Метод должен быть реализован в подклассе
+        """
         raise NotImplementedError("Метод должен быть реализован в подклассе")
 
     def __str__(self) -> str:
+        """Возвращает строковое представление фигуры.
+        Returns:
+            Строковое описание фигуры
+        Raises:
+            NotImplementedError: Метод должен быть реализован в подклассе
+        """
         raise NotImplementedError("Метод должен быть реализован в подклассе")
 
     def update_edit_date(self):
+        """Обновляет дату последнего редактирования фигуры"""
         self.last_edit_date = datetime.datetime.now()
 
 
 class Circle(Shape):
+    """Класс для представления круга"""
     def __init__(
         self,
         center_x: int,
@@ -42,18 +73,37 @@ class Circle(Shape):
         radius: int,
         color: Color
     ):
+        """Инициализирует круг.
+        Args:
+            center_x: X-координата центра
+            center_y: Y-координата центра
+            radius: Радиус круга
+            color: Цвет круга
+        """
         super().__init__(color)
         self.center_x = center_x
         self.center_y = center_y
         self.radius = radius
 
     def get_area(self) -> float:
+        """Вычисляет площадь круга.
+        Returns:
+            Площадь круга по формуле π * r²
+        """
         return math.pi * self.radius ** 2
 
     def get_perimeter(self) -> float:
+        """Вычисляет длину окружности (периметр круга).
+        Returns:
+            Длина окружности по формуле 2 * π * r
+        """
         return 2 * math.pi * self.radius
 
     def __str__(self) -> str:
+        """Возвращает строковое представление круга.
+        Returns:
+            Подробное описание круга с параметрами
+        """
         return (
             f"Круг: центр({self.center_x},{self.center_y}), "
             f"радиус={self.radius}, "
@@ -66,8 +116,17 @@ class Circle(Shape):
 
 
 class Rectangle(Shape):
+    """Класс для представления прямоугольника."""
     def __init__(self, top_left_x: float, top_left_y: float,
                  bottom_right_x: float, bottom_right_y: float, color: Color):
+        """Инициализирует прямоугольник.
+        Args:
+            top_left_x: X-координата верхнего левого угла
+            top_left_y: Y-координата верхнего левого угла
+            bottom_right_x: X-координата нижнего правого угла
+            bottom_right_y: Y-координата нижнего правого угла
+            color: Цвет прямоугольника
+        """
         super().__init__(color)
         self.top_left_x = top_left_x
         self.top_left_y = top_left_y
@@ -75,18 +134,38 @@ class Rectangle(Shape):
         self.bottom_right_y = bottom_right_y
 
     def get_width(self) -> float:
+        """Вычисляет ширину прямоугольника.
+        Returns:
+            Ширина прямоугольника
+        """
         return abs(self.bottom_right_x - self.top_left_x)
 
     def get_height(self) -> float:
+        """Вычисляет высоту прямоугольника.
+        Returns:
+            Высота прямоугольника
+        """
         return abs(self.bottom_right_y - self.top_left_y)
 
     def get_area(self) -> float:
+        """Вычисляет площадь прямоугольника.
+        Returns:
+            Площадь прямоугольника = ширина * высота
+        """
         return self.get_width() * self.get_height()
 
     def get_perimeter(self) -> float:
+        """Вычисляет периметр прямоугольника.
+        Returns:
+            Периметр прямоугольника = 2 * (ширина + высота)
+        """
         return 2 * (self.get_width() + self.get_height())
 
     def __str__(self) -> str:
+        """Возвращает строковое представление прямоугольника.
+        Returns:
+            Подробное описание прямоугольника с параметрами
+        """
         return (
             f"Прямоугольник: "
             f"верхний левый({self.top_left_x},{self.top_left_y}), "
@@ -100,6 +179,7 @@ class Rectangle(Shape):
 
 
 class Triangle(Shape):
+    """Класс для представления треугольника."""
     def __init__(self, x1: float, y1: float, x2: float, y2: float,
                  x3: float, y3: float, color: Color):
         super().__init__(color)
@@ -131,10 +211,17 @@ class Triangle(Shape):
 
 
 class CommandParser:
+    """Парсер команд для управления фигурами"""
     def __init__(self):
         self.shapes: List[Shape] = []
 
     def parse_color(self, color_str: str) -> Color:
+        """Преобразует строку в значение перечисления Color.
+        Args:
+            color_str: Строковое представление цвета
+        Returns:
+            Соответствующее значение Color или RED по умолчанию
+        """
         color_map = {
             "красный": Color.RED,
             "оранжевый": Color.ORANGE,
@@ -147,6 +234,12 @@ class CommandParser:
         return color_map.get(color_str, Color.RED)
 
     def parse_add_command(self, data: str) -> Union[Shape, None]:
+        """Парсит команду ADD и создает соответствующую фигуру.
+        Args:
+            data: Строка с данными команды ADD
+        Returns:
+            Созданная фигура или None при ошибке
+        """
         parts = data.split()
         if not parts:
             return None
@@ -158,13 +251,13 @@ class CommandParser:
             color = self.parse_color(parts[4])
             return Circle(x, y, r, color)
 
-        elif shape_type == "RECTANGLE":
+        if shape_type == "RECTANGLE":
             tl_x, tl_y = float(parts[1]), float(parts[2])
             br_x, br_y = float(parts[3]), float(parts[4])
             color = self.parse_color(parts[5])
             return Rectangle(tl_x, tl_y, br_x, br_y, color)
 
-        elif shape_type == "TRIANGLE":
+        if shape_type == "TRIANGLE":
             x1, y1 = float(parts[1]), float(parts[2])
             x2, y2 = float(parts[3]), float(parts[4])
             x3, y3 = float(parts[5]), float(parts[6])
@@ -174,6 +267,13 @@ class CommandParser:
         return None
 
     def matches_condition(self, shape: Shape, condition: str) -> bool:
+        """Проверяет, удовлетворяет ли фигура условию.
+        Args:
+            shape: Фигура для проверки
+            condition: Условие в формате "поле оператор значение"
+        Returns:
+            True если фигура удовлетворяет условию, иначе False
+        """
         parts = condition.split()
         if len(parts) < 3:
             return False
@@ -218,6 +318,10 @@ class CommandParser:
         return False
 
     def process_command(self, command: str):
+        """Обрабатывает команду пользователя.
+        Args:
+            command: Строка команды (ADD, REM, PRINT)
+        """
         if not command.strip():
             return
 
@@ -243,6 +347,7 @@ class CommandParser:
             self.print_all()
 
     def print_all(self):
+        """Выводит все фигуры в консоль"""
         print("\n=== СОДЕРЖИМОЕ КОНТЕЙНЕРА ===")
         for shape in self.shapes:
             print(shape)
@@ -250,6 +355,7 @@ class CommandParser:
         print("============================")
 
     def clear(self):
+        """Очищает список фигур"""
         self.shapes.clear()
 
 
@@ -266,8 +372,8 @@ def create_test_files():
                 REM area > 10
                 PRINT"""
 
-    with open('tests/test_basic.txt', 'w', encoding='utf-8') as f:
-        f.write(test1)
+    with open('tests/test_basic.txt', 'w', encoding='utf-8') as file:
+        file.write(test1)
 
     # Тест 2: Сложные условия
     test2 = """# Тест сложных условий
@@ -284,8 +390,8 @@ def create_test_files():
                 REM perimeter > 15
                 PRINT"""
 
-    with open('tests/test_advanced.txt', 'w', encoding='utf-8') as f:
-        f.write(test2)
+    with open('tests/test_advanced.txt', 'w', encoding='utf-8') as file:
+        file.write(test2)
 
     # Тест 3: Граничные случаи
     test3 = """# Тест граничных случаев
@@ -300,8 +406,8 @@ def create_test_files():
                 REM area >= 12.56
                 PRINT"""
 
-    with open('tests/test_edge_cases.txt', 'w', encoding='utf-8') as f:
-        f.write(test3)
+    with open('tests/test_edge_cases.txt', 'w', encoding='utf-8') as file:
+        file.write(test3)
 
     print("Созданы тестовые файлы в папке 'tests'")
 
