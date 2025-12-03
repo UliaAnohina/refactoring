@@ -1,6 +1,5 @@
 """Модуль для работы с геометрическими фигурами.
-
-Содержит классы для создания и управления фигурами (круг, прямоугольник, треугольник),
+Содержит классы для создания и управления фигурами,
 а также парсер команд для добавления, удаления и вывода фигур.
 """
 
@@ -27,7 +26,6 @@ class Shape:
     """Базовый класс для геометрических фигур."""
     def __init__(self, color: Color):
         """Инициализирует фигуру с заданным цветом.
-        
         Args:
             color: Цвет фигуры из перечисления Color
         """
@@ -36,10 +34,8 @@ class Shape:
 
     def get_area(self) -> float:
         """Вычисляет площадь фигуры.
-        
         Returns:
             Площадь фигуры в квадратных единицах
-            
         Raises:
             NotImplementedError: Метод должен быть реализован в подклассе
         """
@@ -47,10 +43,8 @@ class Shape:
 
     def get_perimeter(self) -> float:
         """Вычисляет периметр фигуры.
-        
         Returns:
             Периметр фигуры в линейных единицах
-            
         Raises:
             NotImplementedError: Метод должен быть реализован в подклассе
         """
@@ -58,10 +52,8 @@ class Shape:
 
     def __str__(self) -> str:
         """Возвращает строковое представление фигуры.
-        
         Returns:
             Строковое описание фигуры
-            
         Raises:
             NotImplementedError: Метод должен быть реализован в подклассе
         """
@@ -82,7 +74,6 @@ class Circle(Shape):
         color: Color
     ):
         """Инициализирует круг.
-        
         Args:
             center_x: X-координата центра
             center_y: Y-координата центра
@@ -96,7 +87,6 @@ class Circle(Shape):
 
     def get_area(self) -> float:
         """Вычисляет площадь круга.
-        
         Returns:
             Площадь круга по формуле π * r²
         """
@@ -104,7 +94,6 @@ class Circle(Shape):
 
     def get_perimeter(self) -> float:
         """Вычисляет длину окружности (периметр круга).
-        
         Returns:
             Длина окружности по формуле 2 * π * r
         """
@@ -112,7 +101,6 @@ class Circle(Shape):
 
     def __str__(self) -> str:
         """Возвращает строковое представление круга.
-        
         Returns:
             Подробное описание круга с параметрами
         """
@@ -132,7 +120,6 @@ class Rectangle(Shape):
     def __init__(self, top_left_x: float, top_left_y: float,
                  bottom_right_x: float, bottom_right_y: float, color: Color):
         """Инициализирует прямоугольник.
-        
         Args:
             top_left_x: X-координата верхнего левого угла
             top_left_y: Y-координата верхнего левого угла
@@ -148,7 +135,6 @@ class Rectangle(Shape):
 
     def get_width(self) -> float:
         """Вычисляет ширину прямоугольника.
-        
         Returns:
             Ширина прямоугольника
         """
@@ -156,7 +142,6 @@ class Rectangle(Shape):
 
     def get_height(self) -> float:
         """Вычисляет высоту прямоугольника.
-        
         Returns:
             Высота прямоугольника
         """
@@ -164,7 +149,6 @@ class Rectangle(Shape):
 
     def get_area(self) -> float:
         """Вычисляет площадь прямоугольника.
-        
         Returns:
             Площадь прямоугольника = ширина * высота
         """
@@ -172,7 +156,6 @@ class Rectangle(Shape):
 
     def get_perimeter(self) -> float:
         """Вычисляет периметр прямоугольника.
-        
         Returns:
             Периметр прямоугольника = 2 * (ширина + высота)
         """
@@ -180,7 +163,6 @@ class Rectangle(Shape):
 
     def __str__(self) -> str:
         """Возвращает строковое представление прямоугольника.
-        
         Returns:
             Подробное описание прямоугольника с параметрами
         """
@@ -235,10 +217,8 @@ class CommandParser:
 
     def parse_color(self, color_str: str) -> Color:
         """Преобразует строку в значение перечисления Color.
-        
         Args:
             color_str: Строковое представление цвета
-            
         Returns:
             Соответствующее значение Color или RED по умолчанию
         """
@@ -255,10 +235,8 @@ class CommandParser:
 
     def parse_add_command(self, data: str) -> Union[Shape, None]:
         """Парсит команду ADD и создает соответствующую фигуру.
-        
         Args:
             data: Строка с данными команды ADD
-            
         Returns:
             Созданная фигура или None при ошибке
         """
@@ -290,11 +268,9 @@ class CommandParser:
 
     def matches_condition(self, shape: Shape, condition: str) -> bool:
         """Проверяет, удовлетворяет ли фигура условию.
-        
         Args:
             shape: Фигура для проверки
             condition: Условие в формате "поле оператор значение"
-            
         Returns:
             True если фигура удовлетворяет условию, иначе False
         """
@@ -343,7 +319,6 @@ class CommandParser:
 
     def process_command(self, command: str):
         """Обрабатывает команду пользователя.
-        
         Args:
             command: Строка команды (ADD, REM, PRINT)
         """
@@ -397,8 +372,8 @@ def create_test_files():
                 REM area > 10
                 PRINT"""
 
-    with open('tests/test_basic.txt', 'w', encoding='utf-8') as f:
-        f.write(test1)
+    with open('tests/test_basic.txt', 'w', encoding='utf-8') as file:
+        file.write(test1)
 
     # Тест 2: Сложные условия
     test2 = """# Тест сложных условий
@@ -415,8 +390,8 @@ def create_test_files():
                 REM perimeter > 15
                 PRINT"""
 
-    with open('tests/test_advanced.txt', 'w', encoding='utf-8') as f:
-        f.write(test2)
+    with open('tests/test_advanced.txt', 'w', encoding='utf-8') as file:
+        file.write(test2)
 
     # Тест 3: Граничные случаи
     test3 = """# Тест граничных случаев
@@ -431,8 +406,8 @@ def create_test_files():
                 REM area >= 12.56
                 PRINT"""
 
-    with open('tests/test_edge_cases.txt', 'w', encoding='utf-8') as f:
-        f.write(test3)
+    with open('tests/test_edge_cases.txt', 'w', encoding='utf-8') as file:
+        file.write(test3)
 
     print("Созданы тестовые файлы в папке 'tests'")
 
